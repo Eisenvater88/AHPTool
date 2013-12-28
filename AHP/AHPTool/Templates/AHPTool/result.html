@@ -1,0 +1,20 @@
+<!doctype html><html lang="en"><head>  <meta charset="utf-8"> 
+ <title>AHP Test</title> 
+ </head>
+          
+          
+<body> 
+Ergebnisvektor: <br>
+{% if list %}
+   {% for v in list %}
+   {{v}}<br>
+   {% endfor %}
+{% else %}
+    <p>uupps</p>
+{% endif %}
+
+{% if sum %}
+ 	Summe: {{sum}}
+{% endif %}
+
+</body></html> 

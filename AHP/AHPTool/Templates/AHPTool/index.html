@@ -1,0 +1,130 @@
+<!doctype html><html lang="en"><head>  <meta charset="utf-8"> 
+ <title>AHP Test</title> 
+ <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+  <script src="http://code.jquery.com/jquery-1.9.1.js"></script>  
+  <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+  
+<link rel="stylesheet" type="text/css" media="screen" href="site_media/style.css" />
+
+
+
+          
+<script>
+$( document ).ready(function() {$.each($('.slider'), function() {
+	$( '.slider' ).slider({
+		value:0,
+		min: -8,
+		max: 8,
+		step: 1,
+		slide: function( event, ui ) {
+			$(this).parent().find('.amount').val( Math.abs(ui.value)+1 );
+		}
+	});
+	$( ".amount" ).val( $( ".slider" ).slider( "value" )+1);
+	});
+});
+
+$(document).ready(function(){
+    $(".MyButton").click(function(){
+               var json = { };
+       $( ".slider" ).each(function(e){
+                               json[e] = $(this).slider("value");
+                });
+
+                $.ajax({
+                               url: '/save/',
+                               type: 'GET',
+                               contentType: 'application/json; charset=utf-8',
+                               data: json,
+                               dataType: 'text',
+                               success: function(json) {
+                               		$( "#dialog" ).css("display", "inline");
+                               		$( ".MyButton").css("display", "none");
+                               		$( ".slider" ).slider( "disable" );
+                               }
+                               });           
+
+
+
+    });
+  });
+
+
+
+</script>
+
+               
+          
+          
+          
+ </head>
+          
+          
+<body> 
+<h1>Priorisierung der Wertdimensionen von IT-Anforderungen</h1>
+<div id="dialog" title="Basic dialog">
+<p>Vielen Dank fuer Ihre Unterstuetzung <br>
+<a href="/result/"> Ergbnisse anzeigen</a>
+</p>
+</div>
+<div class='bound'>
+{% if list %}
+   {% for k, v in list %}
+
+<div class='q'>
+	<p>
+       {{k}} zu {{v}}
+
+<label for="amount">Relevanzunterschied:</label>
+<input type="text" class='amount' id="amount" style="border:0; color:#f6931f; font-weight:bold;">
+</p>
+<div id="slider" class='slider'></div>
+</div>
+
+
+
+{% endfor %}
+<p style="padding-top:50px;">
+	<a href="#" class="MyButton">Submit</a>
+</p>
+	 
+{% else %}
+    <p>uupps</p>
+{% endif %}
+</div>
+
+<div class="Skala">
+<table class="zebra">
+<tr>
+<th>Skalenwert</th>
+<th>Bedeutung</th>
+</tr>
+<tr>
+<td>1</td>
+<td>gleiche Bedeutung</td>
+</tr>
+<tr>
+<td>3</td>
+<td>etwas größere Bedeutung</td>
+</tr>
+<tr>
+<td>5</td>
+<td>sehr viel größere Bedeutung</td>
+</tr>
+<tr>
+<td>7</td>
+<td>erheblich größere Bedeutung</td>
+</tr>
+<tr>
+<td>9</td>
+<td>absolut dominierend</td>
+</tr>
+<tr>
+<td>2, 4, 6, 8</td>
+<td>Zwischenwerte</td>
+</tr>
+</table>
+</div>
+
+
+</body></html> 
